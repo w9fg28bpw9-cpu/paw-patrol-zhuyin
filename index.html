@@ -68,7 +68,7 @@ body{
   aspect-ratio:1/1;border-radius:24px;overflow:hidden;display:grid;place-items:center;
   background:linear-gradient(135deg,#cfeeff,#fff0b8);border:3px dashed #90b8dc
 }
-.visual img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+.visual img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;padding:4px;box-sizing:border-box}
 .visual .emoji{font-size:90px}
 .zhuyinBig{
   width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;
@@ -161,18 +161,47 @@ body{
 }
 
 
-    .visual img.alex-full{
-      object-fit:contain !important;
-      object-position:center center !important;
-      background:#eef8ff;
-    }
+    
 
 @media(max-width:600px){
-  .visual{
-    max-width:255px !important;
-    width:75% !important;
-    margin:auto !important;
+  body{padding:8px 8px 14px}
+  .wrap{max-width:100%}
+  header{padding:10px 12px;border-radius:20px}
+  header h1{font-size:26px;line-height:1.15;margin:0 0 4px}
+  header p{font-size:13px;line-height:1.35;margin:0}
+  .tabs{margin:8px 0;gap:6px}
+  .tab{padding:8px 12px;font-size:17px}
+  .panel{padding:9px;border-radius:20px}
+  .panel h2{font-size:19px;margin:0 0 7px}
+  .sounds{grid-template-columns:repeat(10,1fr);gap:4px}
+  .sound{min-height:31px;padding:2px;font-size:18px;border-radius:10px}
+  .cardbox{padding:8px;border-radius:20px;margin-top:8px}
+  .bigcard{
+    grid-template-columns:255px minmax(0,1fr) !important;
+    gap:10px !important;
+    padding:8px !important;
+    align-items:center;
   }
+  .visual{
+    width:255px !important;
+    max-width:255px !important;
+    aspect-ratio:1/1 !important;
+    border-radius:16px;
+    margin:0 !important;
+  }
+  .visual .emoji{font-size:54px}
+  .zhuyinBig{width:62px;height:62px;font-size:34px}
+  .word{font-size:28px;line-height:1.25}
+  .note{font-size:14px;line-height:1.3;margin-top:4px}
+  .hanziUnit{margin-right:5px}
+  .hanzi{font-size:28px}
+  .bpmf{font-size:15px}
+  footer{font-size:11px;line-height:1.25;margin-top:8px}
+}
+
+@media(max-width:600px){
+  .bigcard{grid-template-columns:1fr !important;}
+  .visual{width:255px !important;max-width:255px !important;margin:auto !important;}
 }
 </style>
 </head>
@@ -252,8 +281,8 @@ const ASSOC={
 
 
 const ASSOC_IMAGES={
+  "亞歷":"https://vignette.wikia.nocookie.net/paw-patrol/images/6/63/Alex-paddw-patrol.png/revision/latest?cb=20160407185649&path-prefix=pl",
   "野貓":"https://thumbnails.cbsig.net/CBS_Production_Entertainment_VMS/2022/10/19/2086467651605/NICKJR_PAWPATROL_720_HD_1713599_1920x1080.jpg",
-  "亞歷":"https://i.pinimg.com/736x/f3/65/b3/f365b315e2afa8f01ae9f2af6953c1d3.jpg",
   "樂樂":"https://images.openai.com/static-rsc-4/MICC_U5w6uD21LVacR-gkVewQnbCnx6EV6DZKQG5h_BTnQfCcFSmmJVdoV7dwdX8UV1HkLac0kPwF8dU_mGEy8ZGVUcgasWc23h4MAExd2KmdQ7nxf8qcuZ7J_SmxNQl5x-9MactqvisG3EZETIA0JjAPORdPnTHXx75xPKQVP5kfTobBOKzgZ8jzeIFZtzf?purpose=fullsize",
   "機器狗":"https://static.tvtropes.org/pmwiki/pub/images/0fffb714c37b2576d43b99a9d715f073.png",
   "農夫由美":"https://img.rtve.es/imagenes/patrulla-salva-granjera-voladora-yumi/01729698872319.jpg",
