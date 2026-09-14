@@ -209,13 +209,8 @@ body{
 <div class="wrap">
   <section class="hero">
     <h1>🐾 汪汪隊 × 注音聯想卡</h1>
-    <p>按一個注音，就跳出一張聯想卡。這是第二版草稿，之後可以再依你的想法改角色、詞語、圖片和配色。</p>
+    <p>按一個注音，就跳出一張汪汪隊聯想卡 ❤️</p>
   </section>
-
-  <div class="tabs">
-    <button class="tab active" data-tab="assoc">🔤 注音聯想</button>
-    <button class="tab" data-tab="chars">🐶 角色圖卡</button>
-  </div>
 
   <section class="panel active" id="assoc">
     <div class="soundbar">
@@ -225,15 +220,6 @@ body{
     <div class="cardbox" id="assocCard"></div>
   </section>
 
-  <section class="panel" id="chars">
-    <div class="charControls">
-      <input id="search" type="search" placeholder="搜尋角色名稱">
-      <button onclick="searchChars()" style="background:#dff3ff">🔍 搜尋</button>
-      <button onclick="renderChars(CHARACTERS)" style="background:#ffe9a8">🐾 全部角色</button>
-      <button onclick="window.print()" style="background:#e8e8ef">🖨️ A4 列印</button>
-    </div>
-    <div class="grid" id="grid"></div>
-  </section>
 
   <div class="foot">※ 聯想詞目前先依照你提供的草稿概念放入，沒有設定的音先標成「待設定」，方便下一版再改。</div>
 </div>
@@ -245,7 +231,6 @@ const SOUNDS=["ㄅ","ㄆ","ㄇ","ㄈ","ㄉ","ㄊ","ㄋ","ㄌ","ㄍ","ㄎ","ㄏ",
 
 const ASSOC={
   "ㄈ":[{word:"法蘭索瓦",zy:["ㄈㄚˇ","ㄌㄢˊ","ㄙㄨㄛˇ","ㄨㄚˇ"],emoji:"👨🏻‍🔬",note:"法蘭索瓦"}],
-  "ㄇ":[{word:"毛毛",zy:["ㄇㄠˊ","ㄇㄠˊ"],emoji:"🚒",note:"消防狗狗"}],
   "ㄊ":[{word:"天天",zy:["ㄊㄧㄢ","ㄊㄧㄢ"],emoji:"🚁",note:"飛向天空"}],
   "ㄋ":[{word:"農夫由美",zy:["ㄋㄨㄥˊ","ㄈㄨ","ㄧㄡˊ","ㄇㄟˇ"],emoji:"👩‍🌾",note:"汪汪隊的朋友"}],
   "ㄌ":[
@@ -260,20 +245,17 @@ const ASSOC={
   "ㄓ":[{word:"珠珠",zy:["ㄓㄨ","ㄓㄨ"],emoji:"❄️",note:"雪地救援"}],
   "ㄧ":[{word:"亞歷",zy:["ㄧㄚˋ","ㄌㄧˋ"],emoji:"👦",note:"亞歷"}],
   "ㄅ":[{word:"波特先生",zy:["ㄅㄛ","ㄊㄜˋ","ㄒㄧㄢ","ㄕㄥ"],emoji:"👨",note:"波特先生"}],
-  "ㄆ":[
-    {word:"噴火龍火花",zy:["ㄆㄣ","ㄏㄨㄛˇ","ㄌㄨㄥˊ","ㄏㄨㄛˇ","ㄏㄨㄚ"],emoji:"🐉",note:"噴火龍「火花」"},
-    {word:"噴射背包",zy:["ㄆㄣ","ㄕㄜˋ","ㄅㄟˋ","ㄅㄠ"],emoji:"🎒",note:"噴射背包"}
-  ],
-  "ㄔ":[{word:"叢林探險",zy:["ㄘㄨㄥˊ","ㄌㄧㄣˊ","ㄊㄢˋ","ㄒㄧㄢˇ"],emoji:"🌴",note:"冒險任務"}],
+  "ㄆ":[{word:"噴火龍火花",zy:["ㄆㄣ","ㄏㄨㄛˇ","ㄌㄨㄥˊ","ㄏㄨㄛˇ","ㄏㄨㄚ"],emoji:"🐉",note:"噴火龍「火花」"}],
   "ㄕ":[{word:"珊瑚",zy:["ㄕㄢ","ㄏㄨˊ"],emoji:"🧜‍♀️",note:"取「珊」聯想 ㄕ"}],
   "ㄚ":[{word:"阿奇",zy:["ㄚ","ㄑㄧˊ"],emoji:"🚓",note:"警察狗狗"}],
   "ㄜ":[{word:"樂樂",zy:["ㄌㄜˋ","ㄌㄜˋ"],emoji:"🐾",note:"角色聯想"}],
-  "ㄙ":[{word:"賽車",zy:["ㄙㄞˋ","ㄔㄜ"],emoji:"🏎️",note:"賽車"}],
-  "ㄩ":[{word:"魚尾巴",zy:["ㄩˊ","ㄨㄟˇ","ㄅㄚ"],emoji:"🐟",note:"魚尾巴"}],
   "ㄛ":[{word:"摩托車",zy:["ㄇㄛˊ","ㄊㄨㄛ","ㄔㄜ"],emoji:"🏍️",note:"取「摩」來聯想 ㄛ"}],
   "ㄝ":[{word:"野貓",zy:["ㄧㄝˇ","ㄇㄠ"],emoji:"🐱",note:"先當候選：『野』實際是 ㄧㄝˇ"}],
   "ㄞ":[{word:"農夫艾爾",zy:["ㄋㄨㄥˊ","ㄈㄨ","ㄞˋ","ㄦˇ"],emoji:"👨‍🌾",note:"取「艾」聯想 ㄞ"}],
-  "ㄟ":[{word:"飛行裝備",zy:["ㄈㄟ","ㄒㄧㄥˊ","ㄓㄨㄤ","ㄅㄟˋ"],emoji:"🪽",note:"取「飛」來聯想 ㄟ"}],
+  "ㄙ":[{word:"卡羅斯",zy:["ㄎㄚˇ","ㄌㄨㄛˊ","ㄙ"],emoji:"👦",note:"取「斯」聯想 ㄙ"}],
+  "ㄠ":[{word:"毛毛",zy:["ㄇㄠˊ","ㄇㄠˊ"],emoji:"🚒",note:"取「毛」聯想 ㄠ"}],
+  "ㄡ":[{word:"猴子",zy:["ㄏㄡˊ","ㄗ˙"],emoji:"🐒",note:"取「猴」聯想 ㄡ"}],
+  "ㄤ":[{word:"汪汪隊",zy:["ㄨㄤ","ㄨㄤ","ㄉㄨㄟˋ"],emoji:"🐾",note:"取「汪」聯想 ㄤ"}],
   "ㄥ":[{word:"燈塔",zy:["ㄉㄥ","ㄊㄚˇ"],emoji:"🗼",note:"取「燈」來聯想 ㄥ"}],
   "ㄨ":[{word:"阿寶船長",zy:["ㄚ","ㄅㄠˇ","ㄔㄨㄢˊ","ㄓㄤˇ"],emoji:"⚓",note:"海上冒險"}],
   "ㄉ":[{word:"大膽哥丹尼",zy:["ㄉㄚˋ","ㄉㄢˇ","ㄍㄜ","ㄉㄢ","ㄋㄧˊ"],emoji:"🛹",note:"冒險角色"}],
@@ -281,6 +263,9 @@ const ASSOC={
 
 
 const ASSOC_IMAGES={
+  "卡羅斯":"https://m.media-amazon.com/images/M/MV5BOWE4NmY5YjctY2VhNy00MDkxLWJjMGYtNzc4MWMxNzY3YmYyXkEyXkFqcGc%40._V1_.jpg",
+  "猴子":"https://img.lemino.docomo.ne.jp/cms/a13d8da/a13d8da_w1.jpg?auto=webp&quality=75&width=3840",
+  "汪汪隊":"https://cdn11.bigcommerce.com/s-ydriczk/images/stencil/1280w/products/90662/100810/Paw-Patrol-Group-Shot-Wide-Cardboard-Cutout-buy-now-at-starstills__89605.1738083068.jpg?c=2",
   "亞歷":"https://vignette.wikia.nocookie.net/paw-patrol/images/6/63/Alex-paddw-patrol.png/revision/latest?cb=20160407185649&path-prefix=pl",
   "野貓":"https://thumbnails.cbsig.net/CBS_Production_Entertainment_VMS/2022/10/19/2086467651605/NICKJR_PAWPATROL_720_HD_1713599_1920x1080.jpg",
   "樂樂":"https://images.openai.com/static-rsc-4/MICC_U5w6uD21LVacR-gkVewQnbCnx6EV6DZKQG5h_BTnQfCcFSmmJVdoV7dwdX8UV1HkLac0kPwF8dU_mGEy8ZGVUcgasWc23h4MAExd2KmdQ7nxf8qcuZ7J_SmxNQl5x-9MactqvisG3EZETIA0JjAPORdPnTHXx75xPKQVP5kfTobBOKzgZ8jzeIFZtzf?purpose=fullsize",
@@ -312,17 +297,6 @@ const CHARACTER_IMAGES={
   "萊德":"https://images.ctfassets.net/47xts72n4555/1JKzWhdHbE6MAvJzQAuM8S/620c1f6b53cb804659c3bc70c0e2b366/guide-ryder-thumbnail.jpg"
 };
 
-const CHARACTERS=[
-  {name:"阿奇",zy:["ㄚ","ㄑㄧˊ"],eng:"Chase"},
-  {name:"毛毛",zy:["ㄇㄠˊ","ㄇㄠˊ"],eng:"Marshall"},
-  {name:"天天",zy:["ㄊㄧㄢ","ㄊㄧㄢ"],eng:"Skye"},
-  {name:"小礫",zy:["ㄒㄧㄠˇ","ㄌㄧˋ"],eng:"Rubble"},
-  {name:"灰灰",zy:["ㄏㄨㄟ","ㄏㄨㄟ"],eng:"Rocky"},
-  {name:"路馬",zy:["ㄌㄨˋ","ㄇㄚˇ"],eng:"Zuma"},
-  {name:"珠珠",zy:["ㄓㄨ","ㄓㄨ"],eng:"Everest"},
-  {name:"莉柏蒂",zy:["ㄌㄧˋ","ㄅㄛˊ","ㄉㄧˋ"],eng:"Liberty"},
-  {name:"萊德",zy:["ㄌㄞˊ","ㄉㄜˊ"],eng:"Ryder"}
-];
 
 const soundsEl=document.getElementById("sounds");
 const assocCard=document.getElementById("assocCard");
@@ -367,31 +341,7 @@ function showAssoc(s,btn){
   }).join("")}</div>`;
 }
 
-function renderChars(list){
-  document.getElementById("grid").innerHTML=list.map(c=>`
-    <article class="charcard">
-      <div class="avatar"><img src="${CHARACTER_IMAGES[c.name]}" alt="${c.name}"></div>
-      <div class="charAnnotated">${
-        [...c.name].map((ch,i)=>`<span class="hanziUnit"><span class="hanzi">${ch}</span><span class="bpmf">${c.zy[i]||""}</span></span>`).join("")
-      }</div>
-      <div>${c.eng}</div>
-    </article>`).join("");
-}
-function searchChars(){
-  const q=document.getElementById("search").value.trim().toLowerCase();
-  renderChars(CHARACTERS.filter(c=>!q||c.name.includes(q)||c.eng.toLowerCase().includes(q)));
-}
-document.getElementById("search").addEventListener("keydown",e=>{if(e.key==="Enter")searchChars()});
-
-document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
-  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-  document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");
-  document.getElementById(btn.dataset.tab).classList.add("active");
-}));
-
 drawSounds();
-renderChars(CHARACTERS);
 
 const savedSound=sessionStorage.getItem("pawSelectedSound");
 if(savedSound && SOUNDS.includes(savedSound)){
