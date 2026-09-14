@@ -160,6 +160,12 @@ body{
   .sound{min-height:38px;border-radius:10px;font-size:20px;padding:3px 0}
 }
 
+
+    .visual img.fit-whole{
+      object-fit:contain !important;
+      object-position:center center !important;
+      background:#eef8ff;
+    }
 </style>
 </head>
 <body>
@@ -311,7 +317,7 @@ function showAssoc(s,btn){
   assocCard.innerHTML=`<div class="multiCards">${items.map(item=>{
     const img=CHARACTER_IMAGES[item.word] || ASSOC_IMAGES[item.word];
     const visual=img
-      ? `<img src="${img}" alt="${item.word}" onerror="this.outerHTML='<div class=&quot;emoji&quot;>${item.emoji}</div>'">`
+      ? `<img src="${img}" alt="${item.word}" class="${item.word===\'亞歷\'?\'fit-whole\':\'\'}" onerror="this.outerHTML='<div class=&quot;emoji&quot;>${item.emoji}</div>'">`
       : `<div class="emoji">${item.emoji}</div>`;
     return `<div class="bigcard">
       <div class="visual">${visual}</div>
