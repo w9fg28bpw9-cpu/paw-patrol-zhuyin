@@ -3,129 +3,304 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>幼兒汪汪隊注音學習卡</title>
+<title>汪汪隊 × 注音聯想卡</title>
 <style>
-:root{--ink:#29485c;--blue:#69c8f0;--yellow:#ffd85d;--shadow:0 6px 18px rgba(45,84,110,.12)}
+:root{
+  --ink:#4a3f3a; --blue:#bfe8ff; --pink:#ffd7e7; --yellow:#ffe9a8;
+  --green:#dff3d3; --purple:#e7dbff; --orange:#ffd8b3; --line:#8da4d6;
+  --shadow:0 6px 18px rgba(73,74,94,.12);
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink);background:linear-gradient(#f7fcff,#fffaf1);min-height:100vh}
-.wrap{width:min(1100px,96vw);margin:auto;padding:18px 0 36px}
-.hero{text-align:center;padding:8px 10px 12px}
-.hero h1{margin:4px 0;font-size:clamp(26px,5vw,42px)}
-.hero p{margin:8px auto 0;max-width:760px;line-height:1.7;color:#527087}
-.controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:12px;border:2px solid #cdeefe;border-radius:18px;background:#fffffff2;box-shadow:var(--shadow);margin-bottom:18px}
-.controls input,.controls select{padding:10px 12px;border:2px solid #b8dff2;border-radius:12px;font-size:17px;background:#fff;color:var(--ink)}
-.controls input{width:180px}
-button{border:0;border-radius:14px;padding:11px 15px;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.08)}
-button:active{transform:translateY(2px);box-shadow:none}
-.search{background:#e8f7ff}.random{background:var(--blue)}.all{background:var(--yellow)}.print{background:#dce8ef}
-.status{text-align:center;margin:6px 0 14px;font-weight:900;color:#567}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;
+  color:var(--ink);background:linear-gradient(#fffdf8,#f6fbff);min-height:100vh;
+  -webkit-text-size-adjust:100%;
+  text-rendering:optimizeLegibility;
+}
+.wrap{width:min(1100px,95vw);margin:auto;padding:18px 0 42px}
+.hero{
+  background:#fff;border:3px solid #c8d6f4;border-radius:28px;padding:18px 16px;
+  box-shadow:var(--shadow);text-align:center
+}
+.hero h1{margin:0;font-size:clamp(28px,5.4vw,46px);color:#476ea8;letter-spacing:1px}
+.hero p{margin:8px 0 0;color:#776860;line-height:1.65}
+.tabs{display:flex;gap:10px;justify-content:center;margin:16px 0}
+.tab{
+  border:0;border-radius:999px;padding:11px 18px;font-size:17px;font-weight:900;
+  background:#fff;box-shadow:var(--shadow);cursor:pointer
+}
+.tab.active{background:#698fd0;color:#fff}
+.panel{display:none}.panel.active{display:block}
+.soundbar{
+  background:#fff;border:3px solid #d9c8f4;border-radius:26px;padding:16px;margin-bottom:16px;
+  box-shadow:var(--shadow)
+}
+.soundbar h2{margin:0 0 12px;font-size:21px;color:#6b5d9b}
+.sounds{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;align-items:stretch}
+.sound{
+  border:0;border-radius:18px;min-height:58px;min-width:0;
+  padding:6px 2px;font-size:clamp(24px,5vw,30px);font-weight:900;line-height:1;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.07)
+}
+.sound:nth-child(6n+1){background:#ffd9df}.sound:nth-child(6n+2){background:#d8efff}
+.sound:nth-child(6n+3){background:#eadcff}.sound:nth-child(6n+4){background:#ddf1d7}
+.sound:nth-child(6n+5){background:#ffefb4}.sound:nth-child(6n+6){background:#ffe0ef}
+.sound.selected{outline:4px solid #6a84c8;transform:translateY(-1px)}
+.cardbox{
+  background:#fff;border:3px solid #c8d6f4;border-radius:28px;padding:18px;box-shadow:var(--shadow)
+}
+.bigcard{
+  display:grid;grid-template-columns:minmax(180px,42%) minmax(0,1fr);gap:18px;align-items:center;
+  border-radius:24px;padding:18px;background:linear-gradient(135deg,#fefefe,#f5fbff)
+}
+.bigcard>div{min-width:0}
+.visual{
+  aspect-ratio:1/1;border-radius:24px;overflow:hidden;display:grid;place-items:center;
+  background:linear-gradient(135deg,#cfeeff,#fff0b8);border:3px dashed #90b8dc
+}
+.visual img{width:100%;height:100%;object-fit:cover;display:block}
+.visual .emoji{font-size:90px}
+.zhuyinBig{
+  width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  margin:0 0 10px 0;background:#fff;border:4px dashed #7ba7cf;
+  font-size:54px;font-weight:900;line-height:1;color:#242424;white-space:nowrap
+}
+.word{
+  font-size:clamp(30px,6.5vw,56px);font-weight:900;line-height:1.18;
+  overflow-wrap:anywhere;word-break:keep-all
+}
+.note{
+  margin-top:8px;font-size:clamp(16px,4vw,19px);line-height:1.5;color:#7a6d67;
+  overflow-wrap:anywhere
+}
+.empty{padding:34px;text-align:center;color:#998f89;font-weight:800}
+.charControls{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:#fff;border:3px solid #cde3f5;
+  border-radius:24px;padding:14px;margin-bottom:15px;box-shadow:var(--shadow)
+}
+.charControls input{
+  padding:11px 13px;border:2px solid #b7d7ef;border-radius:13px;font-size:17px;width:190px
+}
+.charControls button{
+  border:0;border-radius:13px;padding:11px 15px;font-size:16px;font-weight:900;cursor:pointer
+}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.card{background:#fff;border:2px dashed #9bcde5;border-radius:20px;padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;break-inside:avoid}
-.avatar{width:100%;aspect-ratio:1/1;border-radius:18px;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#fff 0 25%,#ecf9ff 26% 55%,#dff2fb 56%);font-size:clamp(64px,10vw,110px)}
-.name{font-size:clamp(22px,2.6vw,30px);font-weight:1000;margin:8px 0 8px}
-.eng{font-size:12px;color:#789;margin-bottom:8px}
-.zhuyin{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}
-.zy{background:#fff;border:2px solid #a9d9ef;color:#235773;border-radius:9px;padding:5px 7px;font-weight:900;min-width:38px;text-align:center}
-.role{margin-top:9px;font-size:13px;color:#58748a;text-align:center}
-@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.controls input{width:150px}}
+.charcard{
+  background:#fff;border:2px dashed #9bcde5;border-radius:20px;padding:12px;box-shadow:var(--shadow);
+  text-align:center
+}
+.avatar{aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:#eef8fd}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.cname{font-size:clamp(21px,5vw,25px);font-weight:900;margin-top:8px;line-height:1.2;overflow-wrap:anywhere}
+.charcard>div:not(.avatar){min-width:0}
+.czy{font-weight:900;color:#47718d;margin-top:5px;line-height:1.45;overflow-wrap:anywhere}
+.foot{text-align:center;color:#8c7b72;font-size:13px;margin-top:16px}
+
+.annotatedWord{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-top:2px}
+.hanziUnit{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.hanzi{font-size:clamp(34px,7vw,58px);font-weight:900;line-height:1}
+.bpmf{font-size:clamp(16px,3.6vw,22px);font-weight:900;line-height:1.05;color:#6d7fa6;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:1px}
+.charAnnotated{display:flex;justify-content:center;flex-wrap:wrap;gap:5px;margin-top:8px}
+.charAnnotated .hanzi{font-size:24px}
+.charAnnotated .bpmf{font-size:13px}
+.multiCards{display:grid;gap:14px}
+
+@media(max-width:760px){
+  .wrap{width:min(100%,96vw);padding-top:10px}
+  .hero{padding:15px 12px;border-radius:22px}
+  .hero p{font-size:14px}
+  .tabs{gap:8px;margin:12px 0}
+  .tab{padding:10px 13px;font-size:15px}
+  .soundbar{padding:12px}
+  .sounds{grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
+  .sound{min-height:54px}
+  .cardbox{padding:12px}
+  .bigcard{grid-template-columns:1fr;gap:14px;padding:14px}
+  .visual{max-width:340px;width:100%;margin:auto}
+  .bigcard>div:last-child{text-align:center}
+  .zhuyinBig{margin:0 auto 10px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .charcard{padding:9px}
+}
+@media(max-width:420px){
+  .sounds{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .sound{min-height:50px;font-size:25px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @page{size:A4 portrait;margin:8mm}
 @media print{
- body{background:#fff}.wrap{width:100%;padding:0}.controls,.status,.hero p{display:none!important}
- .hero h1{font-size:18pt;margin:0 0 4mm}.grid{grid-template-columns:repeat(3,1fr);gap:4mm}
- .card{box-shadow:none;border:1.4pt dashed #8fbfd4;min-height:78mm;padding:3mm}
- .avatar{height:43mm;aspect-ratio:auto;font-size:52pt}.name{font-size:14pt}.zy{font-size:10pt}
+  .tabs,.soundbar,.charControls,.foot{display:none!important}
+  .panel{display:block!important}.hero{box-shadow:none}.grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
-<section class="hero">
-  <h1>🐾 幼兒汪汪隊注音學習卡</h1>
-  <p>認角色、看中文字、讀注音。可以搜尋角色，也能指定注音符號，再隨機出題。</p>
-</section>
+  <section class="hero">
+    <h1>🐾 汪汪隊 × 注音聯想卡</h1>
+    <p>按一個注音，就跳出一張聯想卡。這是第二版草稿，之後可以再依你的想法改角色、詞語、圖片和配色。</p>
+  </section>
 
-<div class="controls">
-  <input id="searchInput" type="search" placeholder="搜尋角色名稱">
-  <select id="zhuyinSelect">
-    <option value="">全部注音（混合）</option>
-    <option>ㄅ</option><option>ㄆ</option><option>ㄇ</option><option>ㄈ</option>
-    <option>ㄉ</option><option>ㄊ</option><option>ㄋ</option><option>ㄌ</option>
-    <option>ㄍ</option><option>ㄎ</option><option>ㄏ</option><option>ㄐ</option>
-    <option>ㄑ</option><option>ㄒ</option><option>ㄓ</option><option>ㄔ</option>
-    <option>ㄕ</option><option>ㄖ</option><option>ㄗ</option><option>ㄘ</option>
-    <option>ㄙ</option><option>ㄧ</option><option>ㄨ</option><option>ㄩ</option>
-    <option>ㄚ</option><option>ㄛ</option><option>ㄜ</option><option>ㄝ</option>
-    <option>ㄞ</option><option>ㄟ</option><option>ㄠ</option><option>ㄡ</option>
-    <option>ㄢ</option><option>ㄣ</option><option>ㄤ</option><option>ㄥ</option><option>ㄦ</option>
-  </select>
-  <button class="search" id="searchBtn">🔍 搜尋</button>
-  <button class="random" id="randomBtn">🎲 隨機出題</button>
-  <button class="all" id="allBtn">🐾 全部角色</button>
-  <button class="print" onclick="window.print()">🖨️ A4 列印</button>
-</div>
+  <div class="tabs">
+    <button class="tab active" data-tab="assoc">🔤 注音聯想</button>
+    <button class="tab" data-tab="chars">🐶 角色圖卡</button>
+  </div>
 
-<div class="status" id="status"></div>
-<main class="grid" id="grid"></main>
+  <section class="panel active" id="assoc">
+    <div class="soundbar">
+      <h2>選一個注音：</h2>
+      <div class="sounds" id="sounds"></div>
+    </div>
+    <div class="cardbox" id="assocCard"></div>
+  </section>
+
+  <section class="panel" id="chars">
+    <div class="charControls">
+      <input id="search" type="search" placeholder="搜尋角色名稱">
+      <button onclick="searchChars()" style="background:#dff3ff">🔍 搜尋</button>
+      <button onclick="renderChars(CHARACTERS)" style="background:#ffe9a8">🐾 全部角色</button>
+      <button onclick="window.print()" style="background:#e8e8ef">🖨️ A4 列印</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <div class="foot">※ 聯想詞目前先依照你提供的草稿概念放入，沒有設定的音先標成「待設定」，方便下一版再改。</div>
 </div>
 
 <script>
 "use strict";
-const CHARACTERS = [
-  {name:"阿奇", eng:"Chase", zhuyin:["ㄚ","ㄑㄧˊ"], emoji:"🐶", role:"警察狗狗"},
-  {name:"毛毛", eng:"Marshall", zhuyin:["ㄇㄠˊ","ㄇㄠˊ"], emoji:"🐶", role:"消防狗狗"},
-  {name:"天天", eng:"Skye", zhuyin:["ㄊㄧㄢ","ㄊㄧㄢ"], emoji:"🐶", role:"飛行狗狗"},
-  {name:"小礫", eng:"Rubble", zhuyin:["ㄒㄧㄠˇ","ㄌㄧˋ"], emoji:"🐶", role:"工程狗狗"},
-  {name:"灰灰", eng:"Rocky", zhuyin:["ㄏㄨㄟ","ㄏㄨㄟ"], emoji:"🐶", role:"回收與修理狗狗"},
-  {name:"路馬", eng:"Zuma", zhuyin:["ㄌㄨˋ","ㄇㄚˇ"], emoji:"🐶", role:"水上救援狗狗"},
-  {name:"珠珠", eng:"Everest", zhuyin:["ㄓㄨ","ㄓㄨ"], emoji:"🐶", role:"雪地救援狗狗"},
-  {name:"莉柏蒂", eng:"Liberty", zhuyin:["ㄌㄧˋ","ㄅㄛˊ","ㄉㄧˋ"], emoji:"🐶", role:"城市救援夥伴"},
-  {name:"萊德", eng:"Ryder", zhuyin:["ㄌㄞˊ","ㄉㄜˊ"], emoji:"🧑", role:"汪汪隊隊長"}
+
+const SOUNDS=["ㄅ","ㄆ","ㄇ","ㄈ","ㄉ","ㄊ","ㄋ","ㄌ","ㄍ","ㄎ","ㄏ","ㄐ","ㄑ","ㄒ","ㄓ","ㄔ","ㄕ","ㄖ","ㄗ","ㄘ","ㄙ","ㄧ","ㄨ","ㄩ","ㄚ","ㄛ","ㄜ","ㄝ","ㄞ","ㄟ","ㄠ","ㄡ","ㄢ","ㄣ","ㄤ","ㄥ","ㄦ"];
+
+const ASSOC={
+  "ㄇ":[{word:"毛毛",zy:["ㄇㄠˊ","ㄇㄠˊ"],emoji:"🚒",note:"消防狗狗"}],
+  "ㄊ":[{word:"天天",zy:["ㄊㄧㄢ","ㄊㄧㄢ"],emoji:"🚁",note:"飛向天空"}],
+  "ㄋ":[{word:"農夫由美",zy:["ㄋㄨㄥˊ","ㄈㄨ","ㄧㄡˊ","ㄇㄟˇ"],emoji:"👩‍🌾",note:"汪汪隊的朋友"}],
+  "ㄌ":[
+    {word:"路馬",zy:["ㄌㄨˋ","ㄇㄚˇ"],emoji:"🛟",note:"水上救援"},
+    {word:"萊德",zy:["ㄌㄞˊ","ㄉㄜˊ"],emoji:"🧑‍🚒",note:"汪汪隊隊長"}
+  ],
+  "ㄍ":[{word:"咕咕雞",zy:["ㄍㄨ","ㄍㄨ","ㄐㄧ"],emoji:"🐔",note:"汪汪隊故事角色"}],
+  "ㄏ":[{word:"灰灰",zy:["ㄏㄨㄟ","ㄏㄨㄟ"],emoji:"♻️",note:"一起環保"}],
+  "ㄐ":[{word:"機器狗",zy:["ㄐㄧ","ㄑㄧˋ","ㄍㄡˇ"],emoji:"🤖",note:"科技救援"}],
+  "ㄎ":[{word:"氣墊船",zy:["ㄑㄧˋ","ㄉㄧㄢˋ","ㄔㄨㄢˊ"],emoji:"🚤",note:"水上交通工具"}],
+  "ㄒ":[{word:"小礫",zy:["ㄒㄧㄠˇ","ㄌㄧˋ"],emoji:"🚧",note:"工程狗狗"}],
+  "ㄓ":[{word:"珠珠",zy:["ㄓㄨ","ㄓㄨ"],emoji:"❄️",note:"雪地救援"}],
+  "ㄧ":[{word:"超能力寶石",zy:["ㄔㄠ","ㄋㄥˊ","ㄌㄧˋ","ㄅㄠˇ","ㄕˊ"],emoji:"💎",note:"超能力主題"}],
+  "ㄅ":[{word:"波特先生",zy:["ㄅㄛ","ㄊㄜˋ","ㄒㄧㄢ","ㄕㄥ"],emoji:"👨",note:"波特先生"}],
+  "ㄆ":[
+    {word:"噴火龍",zy:["ㄆㄣ","ㄏㄨㄛˇ","ㄌㄨㄥˊ"],emoji:"🐉",note:"噴火龍"},
+    {word:"噴射背包",zy:["ㄆㄣ","ㄕㄜˋ","ㄅㄟˋ","ㄅㄠ"],emoji:"🎒",note:"噴射背包"}
+  ],
+  "ㄔ":[{word:"叢林探險",zy:["ㄘㄨㄥˊ","ㄌㄧㄣˊ","ㄊㄢˋ","ㄒㄧㄢˇ"],emoji:"🌴",note:"冒險任務"}],
+  "ㄚ":[{word:"阿奇",zy:["ㄚ","ㄑㄧˊ"],emoji:"🚓",note:"警察狗狗"}],
+  "ㄜ":[{word:"樂樂",zy:["ㄌㄜˋ","ㄌㄜˋ"],emoji:"🐾",note:"角色聯想"}],
+  "ㄙ":[{word:"賽車",zy:["ㄙㄞˋ","ㄔㄜ"],emoji:"🏎️",note:"賽車"}],
+  "ㄩ":[{word:"魚尾巴",zy:["ㄩˊ","ㄨㄟˇ","ㄅㄚ"],emoji:"🐟",note:"魚尾巴"}],
+  "ㄛ":[{word:"摩托車",zy:["ㄇㄛˊ","ㄊㄨㄛ","ㄔㄜ"],emoji:"🏍️",note:"取「摩」來聯想 ㄛ"}],
+  "ㄝ":[{word:"野貓",zy:["ㄧㄝˇ","ㄇㄠ"],emoji:"🐱",note:"先當候選：『野』實際是 ㄧㄝˇ"}],
+  "ㄟ":[{word:"飛行裝備",zy:["ㄈㄟ","ㄒㄧㄥˊ","ㄓㄨㄤ","ㄅㄟˋ"],emoji:"🪽",note:"取「飛」來聯想 ㄟ"}],
+  "ㄥ":[{word:"燈塔",zy:["ㄉㄥ","ㄊㄚˇ"],emoji:"🗼",note:"取「燈」來聯想 ㄥ"}],
+  "ㄨ":[{word:"阿寶船長",zy:["ㄚ","ㄅㄠˇ","ㄔㄨㄢˊ","ㄓㄤˇ"],emoji:"⚓",note:"海上冒險"}],
+  "ㄉ":[{word:"大膽哥丹尼",zy:["ㄉㄚˋ","ㄉㄢˇ","ㄍㄜ","ㄉㄢ","ㄋㄧˊ"],emoji:"🛹",note:"冒險角色"}],
+  "ㄦ":[{word:"農夫艾爾",zy:["ㄋㄨㄥˊ","ㄈㄨ","ㄞˋ","ㄦˇ"],emoji:"👨‍🌾",note:"農場角色"}]
+};
+
+const CHARACTER_IMAGES={
+  "阿奇":"https://images.ctfassets.net/47xts72n4555/6GN9L4mUsTmZXPshFr4ggS/7a759ce2b51b709dd4ed3650407d8138/character-guide-chase-poster.jpg",
+  "毛毛":"https://images.ctfassets.net/47xts72n4555/3WVTL2rTh3XivZNe0gtgrh/87d8bc29e83447cdbe98df2208ce3a00/guide-marshall-thumbnail.jpg",
+  "天天":"https://images.ctfassets.net/47xts72n4555/3YP9CBnpXzX0161Pfw7Obi/c2722d7bff7a313921574074b6918c11/guide-skye-thumbnail.jpg",
+  "小礫":"https://images.ctfassets.net/47xts72n4555/5Xb7AryljXzXAnQpI9xtHN/10b84a4bfc004bb30118846f6eb49a6c/guide-rubble-thumbnail.jpg",
+  "灰灰":"https://images.ctfassets.net/47xts72n4555/jRPL8c7DOnZGOuKa3QVui/f7ab3753c2b3d622ae874f64b55a11e2/guide-rocky-thumbnail.jpg",
+  "路馬":"https://images.ctfassets.net/47xts72n4555/67MLwJ569fnid98RHtj1CZ/b730e91e4bc1a6ded4028e7f9935835d/guide-zuma-thumbnail.jpg",
+  "珠珠":"https://images.ctfassets.net/47xts72n4555/5oT6AP6v4bojNgOCfFmd9M/c1e9bcf29a2f6ef25e9366fe8100aff2/guide-everest-thumbnail.jpg",
+  "莉柏蒂":"https://images.ctfassets.net/47xts72n4555/5cYnUHkSE9T2XiRigOeiaO/5c725e96e3256dfcd8e27bbff6ba0e66/guide-liberty-thumbnail.jpg",
+  "萊德":"https://images.ctfassets.net/47xts72n4555/1JKzWhdHbE6MAvJzQAuM8S/620c1f6b53cb804659c3bc70c0e2b366/guide-ryder-thumbnail.jpg"
+};
+
+const CHARACTERS=[
+  {name:"阿奇",zy:["ㄚ","ㄑㄧˊ"],eng:"Chase"},
+  {name:"毛毛",zy:["ㄇㄠˊ","ㄇㄠˊ"],eng:"Marshall"},
+  {name:"天天",zy:["ㄊㄧㄢ","ㄊㄧㄢ"],eng:"Skye"},
+  {name:"小礫",zy:["ㄒㄧㄠˇ","ㄌㄧˋ"],eng:"Rubble"},
+  {name:"灰灰",zy:["ㄏㄨㄟ","ㄏㄨㄟ"],eng:"Rocky"},
+  {name:"路馬",zy:["ㄌㄨˋ","ㄇㄚˇ"],eng:"Zuma"},
+  {name:"珠珠",zy:["ㄓㄨ","ㄓㄨ"],eng:"Everest"},
+  {name:"莉柏蒂",zy:["ㄌㄧˋ","ㄅㄛˊ","ㄉㄧˋ"],eng:"Liberty"},
+  {name:"萊德",zy:["ㄌㄞˊ","ㄉㄜˊ"],eng:"Ryder"}
 ];
 
-const grid=document.getElementById("grid");
-const status=document.getElementById("status");
-const searchInput=document.getElementById("searchInput");
-const zhuyinSelect=document.getElementById("zhuyinSelect");
+const soundsEl=document.getElementById("sounds");
+const assocCard=document.getElementById("assocCard");
 
-function card(c){
- return `<article class="card">
-   <div class="avatar">${c.emoji}</div>
-   <div class="name">${c.name}</div>
-   <div class="eng">${c.eng}</div>
-   <div class="zhuyin">${c.zhuyin.map(z=>`<span class="zy">${z}</span>`).join("")}</div>
-   <div class="role">${c.role}</div>
- </article>`;
+function drawSounds(){
+  soundsEl.innerHTML=SOUNDS.map(s=>`<button class="sound" data-s="${s}">${s}</button>`).join("");
+  soundsEl.querySelectorAll(".sound").forEach(btn=>btn.addEventListener("click",()=>showAssoc(btn.dataset.s,btn)));
 }
-function render(list,label){
- grid.innerHTML=list.map(card).join("");
- status.textContent=label||`🐾 共 ${list.length} 位角色`;
+function annotatedWord(word,zy){
+  return `<div class="annotatedWord">${
+    [...word].map((ch,i)=>`<span class="hanziUnit"><span class="hanzi">${ch}</span><span class="bpmf">${zy?.[i]||""}</span></span>`).join("")
+  }</div>`;
 }
-function matchesSymbol(c,symbol){
- if(!symbol) return true;
- return c.zhuyin.some(z=>z.includes(symbol));
+function showAssoc(s,btn){
+  document.querySelectorAll(".sound").forEach(x=>x.classList.remove("selected"));
+  if(btn) btn.classList.add("selected");
+  const items=ASSOC[s];
+  if(!items || !items.length){
+    assocCard.innerHTML=`<div class="bigcard">
+      <div class="visual"><div class="emoji">🐾</div></div>
+      <div>
+        <div class="zhuyinBig">${s}</div>
+        <div class="word">待設定</div>
+        <div class="note">這個注音下一版再一起想聯想詞 ❤️</div>
+      </div>
+    </div>`;
+    return;
+  }
+  assocCard.innerHTML=`<div class="multiCards">${items.map(item=>{
+    const img=CHARACTER_IMAGES[item.word];
+    const visual=img
+      ? `<img src="${img}" alt="${item.word}" onerror="this.outerHTML='<div class=&quot;emoji&quot;>${item.emoji}</div>'">`
+      : `<div class="emoji">${item.emoji}</div>`;
+    return `<div class="bigcard">
+      <div class="visual">${visual}</div>
+      <div>
+        <div class="zhuyinBig">${s}</div>
+        ${annotatedWord(item.word,item.zy)}
+        <div class="note">${item.note}</div>
+      </div>
+    </div>`;
+  }).join("")}</div>`;
 }
-function search(){
- const q=searchInput.value.trim();
- const list=CHARACTERS.filter(c=>!q||c.name.includes(q)||c.eng.toLowerCase().includes(q.toLowerCase()));
- render(list,list.length?`🔍 找到 ${list.length} 位角色`:"🔍 找不到符合的角色");
+
+function renderChars(list){
+  document.getElementById("grid").innerHTML=list.map(c=>`
+    <article class="charcard">
+      <div class="avatar"><img src="${CHARACTER_IMAGES[c.name]}" alt="${c.name}"></div>
+      <div class="charAnnotated">${
+        [...c.name].map((ch,i)=>`<span class="hanziUnit"><span class="hanzi">${ch}</span><span class="bpmf">${c.zy[i]||""}</span></span>`).join("")
+      }</div>
+      <div>${c.eng}</div>
+    </article>`).join("");
 }
-function randomQuiz(){
- const symbol=zhuyinSelect.value;
- let pool=CHARACTERS.filter(c=>matchesSymbol(c,symbol));
- pool=[...pool].sort(()=>Math.random()-.5);
- const take=Math.min(6,pool.length);
- const list=pool.slice(0,take);
- if(!list.length){
-   render([],`這一版目前沒有「${symbol}」的角色`);
-   return;
- }
- render(list,symbol?`🎲 注音「${symbol}」：隨機 ${take} 位角色`:`🎲 混合隨機 ${take} 位角色`);
+function searchChars(){
+  const q=document.getElementById("search").value.trim().toLowerCase();
+  renderChars(CHARACTERS.filter(c=>!q||c.name.includes(q)||c.eng.toLowerCase().includes(q)));
 }
-document.getElementById("searchBtn").addEventListener("click",search);
-document.getElementById("randomBtn").addEventListener("click",randomQuiz);
-document.getElementById("allBtn").addEventListener("click",()=>render(CHARACTERS));
-searchInput.addEventListener("keydown",e=>{if(e.key==="Enter")search()});
-render(CHARACTERS);
+document.getElementById("search").addEventListener("keydown",e=>{if(e.key==="Enter")searchChars()});
+
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.tab).classList.add("active");
+}));
+
+drawSounds();
+renderChars(CHARACTERS);
+showAssoc("ㄇ",document.querySelector('[data-s="ㄇ"]'));
 </script>
 </body>
 </html>
