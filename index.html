@@ -347,7 +347,13 @@ document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>
 
 drawSounds();
 renderChars(CHARACTERS);
-showAssoc("ㄇ",document.querySelector('[data-s="ㄇ"]'));
+assocCard.innerHTML=`<div class="bigcard">
+      <div class="visual"><div class="emoji">🐾</div></div>
+      <div>
+        <div class="word">請選一個注音</div>
+        <div class="note">點上面的注音，就會出現聯想角色 ❤️</div>
+      </div>
+    </div>`;
 
 
 </script>
