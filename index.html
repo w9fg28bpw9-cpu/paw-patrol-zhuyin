@@ -161,7 +161,7 @@ body{
 }
 
 
-    .visual img.fit-whole{
+    .visual img.alex-full{
       object-fit:contain !important;
       object-position:center center !important;
       background:#eef8ff;
@@ -317,7 +317,7 @@ function showAssoc(s,btn){
   assocCard.innerHTML=`<div class="multiCards">${items.map(item=>{
     const img=CHARACTER_IMAGES[item.word] || ASSOC_IMAGES[item.word];
     const visual=img
-      ? `<img src="${img}" alt="${item.word}" class="${item.word===\'亞歷\'?\'fit-whole\':\'\'}" onerror="this.outerHTML='<div class=&quot;emoji&quot;>${item.emoji}</div>'">`
+      ? `<img src="${img}" alt="${item.word}" class="${item.word==='亞歷'?'alex-full':''}" onerror="this.outerHTML='<div class=&quot;emoji&quot;>${item.emoji}</div>'">`
       : `<div class="emoji">${item.emoji}</div>`;
     return `<div class="bigcard">
       <div class="visual">${visual}</div>
